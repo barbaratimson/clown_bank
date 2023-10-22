@@ -1,13 +1,326 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --bg-color:#242A33;
+  --primary-color: rgb(73, 82, 99);
+  --font-color:#F0F4EF;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-color);
+  width: 100vw;
+  height: 100vh;
+  font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+}
+
+* {
+  box-sizing: border-box;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: white;
+}
+
+*::-webkit-scrollbar {
+  background-color: transparent;
+  height: 3px;
+}
+
+
+
+.navbar {
+  position: sticky; 
+  display: flex;
+  flex-direction: row;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+}
+
+.main-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 40px;
+  color: var(--font-color);
+  height: 100%;
+  padding: 0 20px;
+  font-weight: 600;
+  user-select: none;
+  transition: all .4s;
+  flex-grow: 1;
+}
+
+
+.settings-icon {
+    display: flex;
+  align-items: center;
+  font-size: 40px;
+  color: var(--font-color);
+  height: 100%;
+  padding: 0 20px;
+  font-weight: 600;
+  user-select: none;
+  transition: all .4s;
+}
+
+.logo:hover {
+  color: rgb(172, 172, 172);
+}
+
+.user-info {
+  width: 90%;
+  padding: 40px;
+  box-shadow: 0px 10px 10px 2px rgba(78, 110, 134, 0.2);
+  display: flex;
+  flex-direction: column;
+
+}
+
+.user-account {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.user-avatar {
+  display: flex;
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  align-items: center;
+  border-radius: 50%;
+}
+
+.user-profile-pic{
+  width: 100%;
+}
+
+.user-initials {
+  color: var(--font-color);
+  font-size: 30px;
+}
+
+.user-addition {
+  color: #a7a7a7;
+  font-size: 17px;
+}
+
+.banking-info {
+  display: flex;
+  flex-direction: row;
+  width: 90%;
+  margin: 0 auto;
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  aspect-ratio: 2/1.2;
+  border-radius: 10px;
+  margin: 20px;
+  padding: 20px;
+  background-color: var(--primary-color);
+  box-shadow: 0px 3px 10px 2px rgba(73, 89, 109, 0.5);
+  transition: scale .2s;
+}
+
+.card.create {
+  background-color: rgb(55, 59, 65);
+  justify-content: center;
+  align-items: center;
+}
+
+
+.card:hover {
+  scale: 1.07;
+}
+
+.card-money {
+  display: flex;
+  flex-direction: row;
+  height: 55%;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 32px;
+}
+
+.card-money-value {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-info {
+  display: flex;
+  flex-direction: row;
+  color: var(--font-color);
+}
+
+.card-number {
+  flex-grow: 1;
+}
+
+
+.card-number::before {
+  content: "*";
+}
+
+.card-processor {
+
+}
+
+.card-actions {
+  display: flex;
+  margin-top: 10px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-deposit-button {
+  
+}
+
+.banking-selection {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding-top: 20px;
+  margin-left: 40px;
+  font-weight: 600px;
+}
+
+.banking-selection-button.active {
+  background-color: rgb(255, 255, 255);
+  scale: 1.1;
+}
+
+.banking-selection-button {
+  padding: 10px;
+  background-color: rgb(167, 167, 167);
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.banking-selection-button:hover {
+  background-color: var(--font-color);
+}
+
+.modal {
+  position: fixed;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: 10000;
+  background-color: rgba(29, 29, 29, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 3%;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  animation: scale .2s;
+  
+}
+
+.modal-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: white;
+  margin: -10px;
+  font-size: 40px;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.authorization-wrapper {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.authorization-window {
+  width: 1200px;
+  height: 800px;
+  background-color: var(--primary-color);
+  border-radius: 40px;
+  overflow: hidden;
+}
+
+.registration-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+}
+.registration-left-side {
+  width: 40%;
+  border-right: 1px solid rgb(153, 153, 153);
+  padding: 30px 40px;
+}
+.registration-left-side .logo {
+  align-items: normal;
+  padding: 0;
+  height: fit-content;
+}
+
+.registration-left-side .logo:hover {
+  color: white;
+}
+
+.registration-right-side{
+  flex-grow: 1;
+  padding: 30px 40px;;
+  height: 100%;
+}
+
+.authorization-title {
+  color: var(--font-color);
+  font-weight: 600;
+  font-size: 50px;
+}
+
+.authorization-line-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.authorization-submit-button-wrapper {
+
+}
+
+.transfer-wrapper {
+  width: 1000px;
+  height: 800px;
+  background-color: var(--primary-color);
+  border-radius: 30px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
 }
