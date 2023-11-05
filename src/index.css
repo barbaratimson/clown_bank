@@ -79,12 +79,12 @@ body {
 }
 
 .user-info {
-  width: 90%;
+  width: 70%;
   padding: 40px;
-  box-shadow: 0px 10px 10px 2px rgba(78, 110, 134, 0.2);
+  box-shadow: 0px 0px 10px 2px rgba(78, 110, 134, 0.2);
   display: flex;
   flex-direction: column;
-
+  border-radius: 30px;
 }
 
 .user-account {
@@ -116,24 +116,98 @@ body {
   font-size: 17px;
 }
 
+.user-desc {
+  flex-grow: 1;
+}
+
+.user-create-account {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.user-create-account-button {
+  color: var(--font-color);
+  font-size: 20px;
+}
+
+
 .banking-info {
   display: flex;
   flex-direction: row;
   width: 90%;
-  margin: 0 auto;
-  overflow: auto;
-  scrollbar-gutter: stable;
+  margin: 20px auto;  
+}
+
+.banking-accounts {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+.bank-account {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 20px;
+  color: var(--font-color);
+}
+
+.bank-account.create{
+    background-color: rgb(55, 59, 65);
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+    width: 50%;
+    align-self: center;
+}
+
+
+.bank-account-money{
+  display: flex;
+  flex-direction: row;
+}
+
+.bank-account-money-value {
+  font-size: 40px;
+}
+
+.bank-account-money-currency{
+  font-size: 30px;
+  margin-top: 5px;
+}
+
+.bank-account-info {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+.bank-account-number::before{
+  content: "**";
+}
+.bank-account-actions{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: end;
+  align-items: center;
+}
+
+.bank-account-topline{
+  display: flex;
+  flex-direction: row;
 }
 
 .card {
   display: flex;
   flex-direction: column;
-  min-width: 250px;
+  width: 300px;
   aspect-ratio: 2/1.2;
   border-radius: 10px;
   margin: 20px;
   padding: 20px;
-  background-color: var(--primary-color);
+  background-color: #33383f;
   box-shadow: 0px 3px 10px 2px rgba(73, 89, 109, 0.5);
   transition: scale .2s;
 }
@@ -167,11 +241,17 @@ body {
 
 .card-info {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   color: var(--font-color);
 }
 
+.card-cridentials {
+ display: flex;
+  gap: 20px;
+}
+
 .card-number {
+  margin-top: 20px;
   flex-grow: 1;
 }
 
@@ -195,13 +275,20 @@ body {
   
 }
 
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+
 .banking-selection {
   display: flex;
   flex-direction: row;
   gap: 20px;
   padding-top: 20px;
   margin-left: 40px;
-  font-weight: 600px;
+  font-weight: 600;
 }
 
 .banking-selection-button.active {
@@ -324,3 +411,4 @@ body {
   display: flex;
   flex-direction: column;
 }
+

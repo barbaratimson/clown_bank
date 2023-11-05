@@ -14,23 +14,16 @@ function BankingInfo() {
     const userAccounts = useAppSelector(state => state.userAccountsStore.userAccounts)   
     const dispatch = useAppDispatch();
     const setUserAccounts = (accounts:Array<BankAccountT>) => dispatch(changeUserAccounts(accounts))
-    const createNewAccount = async () => {
-        try {
-          const response = await axios.post(
-            `${link}/user-account`,{data:{userId:user.uniqueUserId,type:"SAVING",number:Math.random()}});
-          console.log(response.data)  
-        } catch (err) {
-          console.error('Ошибка при получении списка треков:', err);
-          console.log(err)
-        }
-    };
+    const [isLoading,setIsLoading] = useState(true)
+    
 
-    const fetchAccounts = async (uuid="af1b8ec9-0670-4ec8-98b4-4faad32d23e3") => {
+    const fetchAccounts = async (uuid:string) => {
         try {
           const response = await axios.get(
             `${link}/user-account?uniqueNumber=${uuid}`);
             setUserAccounts(response.data)
           console.log(response.data)
+          setIsLoading(false)
         } catch (err) {
           console.error('Ошибка при получении списка треков:', err);
           console.log(err)
@@ -40,38 +33,26 @@ function BankingInfo() {
     useEffect(()=>{
       fetchAccounts(user.uniqueUserId)
     },[])
+    
+    if (isLoading) return <div>Loading...</div>
 
     return (
         <>
-        <div className="banking-selection">
+        {/* <div className="banking-selection">
             <div className={`banking-selection-button ${selectedType === "cards" ? "active" : ""}`} onClick={()=>{setSelectedType("cards")}}>Cards</div>
             <div className={`banking-selection-button ${selectedType === "accounts" ? "active" : ""}`} onClick={()=>{setSelectedType("accounts")}}>Accounts</div>
-        </div>
+        </div> */}
       <div className="banking-info">
-        {selectedType === "cards" ? 
-        (<>
-            <Card value={2000} currency="$" number="434344234" processor="VISA" />
-            <Card value={2000} currency="$" number="434344234" processor="VISA" />
-            <Card value={2000} currency="$" number="434344234" processor="VISA" />
-            <Card value={2000} currency="$" number="434344234" processor="VISA" />
-            <Card value={2000} currency="$" number="434344234" processor="VISA" />
-            <div className="card create">
-            <div className="card-money">
-                <div className="card-money-value">+</div>
-            </div>
-      </div>  
-            </>) : selectedType === "accounts" ? 
-         (<>
+          <div className="banking-accounts">
           {userAccounts ? (userAccounts.map(account =>(
-            <BankAccount key={account.number} value={account.balance} currency="$" number={account.number.slice(32)} />
-          ))):(null)}
-            <div onClick={()=>{createNewAccount()}} className="card create">
+            <BankAccount key={account.number} value={account.balance} currency="$" number={account.number} />
+            ))):null}
+            {/* <div onClick={()=>{createNewAccount()}} className="bank-account create">
             <div className="card-money">
                 <div className="card-money-value">+</div>
             </div>
+            </div> */}
             </div>
-            </>) : null}
-
       </div>  
              </>
     );

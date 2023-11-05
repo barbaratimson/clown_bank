@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { CardT } from "../../utils/types"
+
+interface CardsState {
+    userCards:Array<CardT>
+  }
+
+const initialState:CardsState = {
+    userCards:[]
+}
 
 const userCardsSlice = createSlice({
     name: 'userCards',
-    initialState:{
-        userCards:[]
-    },
+    initialState,
     reducers:{
         changeUserCards(state, action) {
             state.userCards = action.payload
@@ -15,3 +22,4 @@ const userCardsSlice = createSlice({
 
 export const { changeUserCards } = userCardsSlice.actions
 export default userCardsSlice.reducer
+

@@ -10,6 +10,17 @@ export interface BankAccountT {
     active:Boolean
 }
 
+export interface CardT {
+    number:string,
+    userAccountId:number
+    expiredDate:string
+    releaseDate:string
+    cvv:number
+    paymentSystem: Processor
+    blocked: boolean
+}
+
+
 export interface User {
         uniqueUserId: string,
         firstName: string,
