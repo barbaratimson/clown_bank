@@ -9,7 +9,6 @@ import BankAccount from "./BankAccount";
 const link = process.env.REACT_APP_LINK_ACCOUNTSERVICE_LINK
 
 function BankingInfo() {
-    const [selectedType,setSelectedType] = useState<pageType>("cards");
     const user = useAppSelector(state => state.userStore.user)   
     const userAccounts = useAppSelector(state => state.userAccountsStore.userAccounts)   
     const dispatch = useAppDispatch();
@@ -38,20 +37,11 @@ function BankingInfo() {
 
     return (
         <>
-        {/* <div className="banking-selection">
-            <div className={`banking-selection-button ${selectedType === "cards" ? "active" : ""}`} onClick={()=>{setSelectedType("cards")}}>Cards</div>
-            <div className={`banking-selection-button ${selectedType === "accounts" ? "active" : ""}`} onClick={()=>{setSelectedType("accounts")}}>Accounts</div>
-        </div> */}
       <div className="banking-info">
           <div className="banking-accounts">
           {userAccounts ? (userAccounts.map(account =>(
             <BankAccount key={account.number} value={account.balance} currency="$" number={account.number} />
             ))):null}
-            {/* <div onClick={()=>{createNewAccount()}} className="bank-account create">
-            <div className="card-money">
-                <div className="card-money-value">+</div>
-            </div>
-            </div> */}
             </div>
       </div>  
              </>

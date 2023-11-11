@@ -1,4 +1,4 @@
-export type pageType = "cards" | "accounts"
+export type pageType = "myAccounts" | "people"
 export type Currency = "$" | "RUB" | "YEN";
 export type Processor = "VISA" | "MASTERCARD" | "MIR" | "МИР"
 export type BankAccountType = "INVESTMENT" | "CHECKING" | "SAVING" | "DEPOSIT"
