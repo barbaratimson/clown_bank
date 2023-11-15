@@ -16,7 +16,7 @@ function UserInfo() {
 const createNewAccount = async () => {
   try {
     const response = await axios.post(
-      `${link}/user-account`,{userId:user.uniqueUserId});
+      `${link}/user-account`,{userId:user.uniqueUserId,balance:0,active:true});
     window.location.reload()
   } catch (err) {
     console.error('Ошибка при получении списка треков:', err);

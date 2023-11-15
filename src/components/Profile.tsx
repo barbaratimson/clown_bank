@@ -10,8 +10,7 @@ function Profile() {
     <div className="main-wrapper">
         <Navbar/>
         <UserInfo/>
-         <Modal children={<Transfer target1={userAccounts[0]}/>}></Modal>
-        {/*<Modal children={<Transfer/>}></Modal>*/}
+         {/*<Modal children={<Transfer target1={userAccounts[0]}/>}></Modal>*/}
     </div>  
   );
 }

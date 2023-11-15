@@ -1,7 +1,6 @@
 import { useState } from "react"
 
-function Modal({children}:any) {
-    const [active, setActive] = useState(true)
+function Modal({children,active,setActive}:any) {
     return (
             <div className={`modal ${active ? "active" : ""}`} onClick={()=>setActive(false)}>
             <div className={"modal-content"} onClick={(e)=>e.stopPropagation()}>

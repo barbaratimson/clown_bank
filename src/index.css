@@ -162,6 +162,13 @@ body {
   border-radius: 20px;
   color: var(--font-color);
 }
+.bank-account.disabled {
+  filter: grayscale(50%);
+}
+
+.bank-account.disabled> * {
+  text-decoration: line-through;
+}
 
 .bank-account.create{
     background-color: rgb(55, 59, 65);
@@ -201,6 +208,7 @@ body {
   width: 100%;
   justify-content: end;
   align-items: center;
+  gap: 10px;
 }
 
 .bank-account-topline{
@@ -278,6 +286,16 @@ body {
   margin-top: 10px;
   flex-direction: row;
   justify-content: end;
+}
+
+.card-action-button {
+ font-size: 20px;
+  transition: all .3s
+}
+
+.card-action-button:hover {
+  scale: 1.2;
+  color: #aaaaaa;
 }
 
 .card-deposit-button {
@@ -359,6 +377,7 @@ body {
   top: 0;
   z-index: 10000;
   background-color: rgba(29, 29, 29, 0.5);
+  color: black;
 }
 
 .modal-content {

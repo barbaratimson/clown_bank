@@ -1,7 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {BankAccountT, pageType} from "../utils/types";
 import {useAppSelector} from "../utils/hooks";
+import axios, {AxiosError, AxiosResponse} from "axios";
+import {wait} from "@testing-library/user-event/dist/utils";
 
+const link = process.env.REACT_APP_LINK_TRANSACTIONSERVICE_LINK
 
 interface TransferProps {
     target1?:BankAccountT,
@@ -15,12 +18,11 @@ function Transfer({target1,target2}:TransferProps) {
     const [selectedAccount,setSelectedAccount] = useState<BankAccountT>()
     const [targetAccount,setTargetAccount] = useState<BankAccountT>()
     const userAccounts = useAppSelector(state => state.userAccountsStore.userAccounts)
-    console.log(selectedAccount,targetAccount)
     useEffect(() => {
         setSelectedAccount(target1)
     }, [target1]);
 
-    if (validateTransfer) return <div className="transfer-wrapper"><TranferValidation amount = {amount}/></div>
+    if (validateTransfer) return <div className="transfer-wrapper"><TransferValidation key={"Transfer"} target1={selectedAccount?.number} target2={targetAccount?.number} amount = {amount}/></div>
 
     return (
     <div className="transfer-wrapper">
@@ -33,32 +35,54 @@ function Transfer({target1,target2}:TransferProps) {
         <input type="number" value={amount} onChange={(e)=>{setAmount(e.target.value)}}placeholder="Money amount" />
         <div>Стрелка вниз</div>
 
-        <AccountSelection target={target2} state={targetAccount} setState={setTargetAccount} userAccounts={userAccounts}/>
+        <AccountSelection target1={target1} target={target2} state={targetAccount} setState={setTargetAccount} userAccounts={userAccounts}/>
 
         {amount ? (<button onClick={()=>{setValidateTransfer(true)}}>Submit</button>) : (<div>Empty fields</div>)}
     </div>
     );
   }
-  interface Response {
-    status: "OK" | any
-  }
-  function TranferValidation({amount}:any){
+  function TransferValidation({amount,target1,target2}:any){
     const [isLoading,setIsLoading] = useState(true)
-    const [response,setResponse] = useState<Response>({status:"OK"})
+    const [response,setResponse] = useState<AxiosResponse>()
 
-    const fetchTransfer = (amount1:any) =>{
-        console.log(amount1)
-    }
+
+      useEffect(() => {
+          const fetchTransfer = async () => {
+              try {
+                  const response = await axios.post(
+                      `${link}/transaction`,{senderAccountNumber:target1,receiverAccountNumber:target2,amount:amount});
+                  setResponse(response)
+                  console.log(response)
+                  setIsLoading(false)
+              } catch (err:any) {
+                  console.error('Ошибка при проведении перевода:', err)
+                  setResponse(err.response)
+                  setIsLoading(false)
+                  // window.location.assign("/error")
+              }
+          };
+          fetchTransfer()
+      }, []);
+
+      useEffect(() => {
+          if (response?.status === 200) {
+          let wait = setTimeout(()=>{
+                  window.location.reload()
+          },2000)
+          return ()=>{clearTimeout(wait)}
+      }
+      }, [response])
 
     if (isLoading) return <div>Loading</div>
-    return (
+
+      return (
         <div>
-        {response.status === "OK" ? (<div>OK</div>) : (<div>NOT OK</div>)}
+        {response?.status === 200 ? (<div>OK</div>) : (<div>{response?.data}</div>)}
         </div>
     )
   }
 
-function AccountSelection({target,state,setState,userAccounts}:{target?:BankAccountT,state:any,setState:any,userAccounts:Array<BankAccountT>}){
+function AccountSelection({target,target1,state,setState,userAccounts}:{target?:BankAccountT,target1?:BankAccountT,state:any,setState:any,userAccounts:Array<BankAccountT>}){
 
     useEffect(() => {
         setState(target)
@@ -67,11 +91,11 @@ function AccountSelection({target,state,setState,userAccounts}:{target?:BankAcco
     return (
     <>
         {!target ? (
-            <select onChange={(e)=>{setState(userAccounts.find(elem => elem.number == e.target.value))}}>
-                {userAccounts?.map((account)=>(
+            <select defaultValue={"default"} onChange={(e)=>{setState(userAccounts.find(elem => elem.number === e.target.value))}}>
+                {userAccounts?.map((account)=> account.active && account!== target1 ? (
                     <option key={account.number} value={account.number}>{account.number}</option>
-                ))}
-                <option hidden={true}>Select Account</option>
+                ):null)}
+                <option value={"default"} hidden={true}>Select Account</option>
             </select>
         ) : null}
 
