@@ -6,8 +6,8 @@ import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { changeUserAccounts } from "../store/slices/userAccountsSlice";
 import BankAccount from "./BankAccount";
 
-const link = process.env.REACT_APP_LINK_ACCOUNTSERVICE_LINK
-
+const link = process.env.REACT_APP_APIGATEWAY_LINK
+const token = localStorage.getItem("token")
 type pageType = "myAccounts" | "closedAccounts"
 function BankingInfo() {
     const user = useAppSelector(state => state.userStore.user)   
@@ -21,7 +21,11 @@ function BankingInfo() {
     const fetchAccounts = async (uuid:string) => {
         try {
           const response = await axios.get(
-            `${link}/user-account?uniqueNumber=${uuid}`);
+            `${link}/user-account?uniqueNumber=${uuid}`,{
+                headers:{
+                    "Authorization" : token
+                }
+              });
             setUserAccounts(response.data)
           setIsLoading(false)
         } catch (err) {
@@ -40,7 +44,7 @@ function BankingInfo() {
         <>
         <div className="banking-selection">
             <div className={`banking-selection-button ${selectedType === "myAccounts" ? "active" : ""}`} onClick={()=>{setSelectedType("myAccounts")}}>My Accounts</div>
-            <div className={`banking-selection-button ${selectedType === "closedAccounts" ? "active" : ""}`} onClick={()=>{setSelectedType("closedAccounts")}}>ClosedAccounts</div>
+            <div className={`banking-selection-button ${selectedType === "closedAccounts" ? "active" : ""}`} onClick={()=>{setSelectedType("closedAccounts")}}>Closed Accounts</div>
         </div>
       <div className="banking-info">'
           <div className="banking-accounts">

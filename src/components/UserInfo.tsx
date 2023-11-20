@@ -5,8 +5,8 @@ import { changeUser } from "../store/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { User } from "../utils/types";
 
-const link = process.env.REACT_APP_LINK_ACCOUNTSERVICE_LINK
-
+const link = process.env.REACT_APP_APIGATEWAY_LINK
+const token = localStorage.getItem("token")
 function UserInfo() {
   const [isLoading,setIsLoading] = useState(true)
   const dispatch = useAppDispatch();
@@ -16,7 +16,11 @@ function UserInfo() {
 const createNewAccount = async () => {
   try {
     const response = await axios.post(
-      `${link}/user-account`,{userId:user.uniqueUserId,balance:0,active:true});
+      `${link}/user-account`,{userId:user.uniqueUserId,balance:0,active:true},{
+            headers:{
+                "Authorization" : token
+            }
+        });
     window.location.reload()
   } catch (err) {
     console.error('Ошибка при получении списка треков:', err);
@@ -29,7 +33,11 @@ const createNewAccount = async () => {
          try {
              setIsLoading(true)
              const response = await axios.get(
-                 `${link}/user/${UUID}`);
+                 `${link}/user/${UUID}`, {
+                     headers: {
+                         "Authorization": token
+                     }
+                 });
              setUser(response.data)
              console.log(response.data)
              setIsLoading(false)

@@ -219,7 +219,7 @@ body {
 .card {
   display: flex;
   flex-direction: column;
-  width: 300px;
+  min-width: 300px;
   aspect-ratio: 2/1.2;
   border-radius: 10px;
   margin: 20px;
@@ -339,6 +339,12 @@ body {
   flex-direction: row;
   overflow: auto;
   scrollbar-gutter: stable;
+}
+
+.cards-container.inactive {
+  filter:blur(4px);
+  pointer-events: none;
+  user-select: none;
 }
 
 .banking-selection {

@@ -4,8 +4,8 @@ import {useAppSelector} from "../utils/hooks";
 import axios, {AxiosError, AxiosResponse} from "axios";
 import {wait} from "@testing-library/user-event/dist/utils";
 
-const link = process.env.REACT_APP_LINK_TRANSACTIONSERVICE_LINK
-
+const link = process.env.REACT_APP_APIGATEWAY_LINK
+const token = localStorage.getItem("token")
 interface TransferProps {
     target1?:BankAccountT,
     target2?:BankAccountT,
@@ -50,7 +50,11 @@ function Transfer({target1,target2}:TransferProps) {
           const fetchTransfer = async () => {
               try {
                   const response = await axios.post(
-                      `${link}/transaction`,{senderAccountNumber:target1,receiverAccountNumber:target2,amount:amount});
+                      `${link}/transaction`,{senderAccountNumber:target1,receiverAccountNumber:target2,amount:amount},{
+                          headers:{
+                              "Authorization" : token
+                          }
+                      });
                   setResponse(response)
                   console.log(response)
                   setIsLoading(false)
@@ -77,7 +81,8 @@ function Transfer({target1,target2}:TransferProps) {
 
       return (
         <div>
-        {response?.status === 200 ? (<div>OK</div>) : (<div>{response?.data}</div>)}
+        {/*    TODO: Result animation*/}
+        {response?.status === 200 ? (<div>{response?.data}</div>) : (<div>{response?.data}</div>)}
         </div>
     )
   }

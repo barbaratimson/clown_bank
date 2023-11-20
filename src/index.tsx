@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import Router from './router';
+import {ReactKeycloakProvider} from "@react-keycloak/web";
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
