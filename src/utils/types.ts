@@ -30,3 +30,11 @@ export interface User {
         birthDate: string,
         phoneNumber: string
 }
+
+export interface Notification {
+    message: string,
+    timestamp: string
+    userUniqueNumber: string,
+    type: string
+
+}

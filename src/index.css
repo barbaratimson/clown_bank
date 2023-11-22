@@ -4,6 +4,14 @@
   --font-color:#F0F4EF;
 }
 
+@keyframes opacity {
+  0%{
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 body {
   margin: 0;
@@ -431,6 +439,9 @@ body {
   width: 100%;
   height: 100%;
 }
+
+
+
 .registration-left-side {
   width: 40%;
   border-right: 1px solid rgb(153, 153, 153);
@@ -456,16 +467,59 @@ body {
   color: var(--font-color);
   font-weight: 600;
   font-size: 50px;
+  margin-bottom: 20px;
 }
 
 .authorization-line-wrapper {
   width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  margin-bottom: 20px;
+  background-color: #646b7c;
+  border-radius: 15px;
+  padding: 10px 20px;
+}
+
+
+.authorization-line-title {
+  font-size: 14px;
+  color: #ffffff
+
+}
+.authorization-line-input {
+  background-color: transparent;
+  width: 100%;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid white;
+  padding: 10px;
+  font-size: 15px;
 }
 
 .authorization-submit-button-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 
+.authorization-submit-button {
+  width: 80%;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  background-color: #817d7d;
+  padding: 10px;
+  border-radius: 20px;
+  transition: all .4s;
+}
+
+.authorization-submit-button:hover {
+  background-color: #d0d0d0;
+  color: black;
+}
+.authorization-submit-button:active {
+  transition: scale 0.1s;
+  scale: 0.95;
 }
 
 .transfer-wrapper {
@@ -494,4 +548,21 @@ body {
 
 .transfer-account-balance {
 
+}
+
+.notification-wrapper {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  margin: 10px;
+}
+
+.notification {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: var(--primary-color);
+  border-radius: 20px;
+  animation: opacity .4s;
 }

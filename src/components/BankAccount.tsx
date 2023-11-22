@@ -8,7 +8,8 @@ import {SlOptions} from "react-icons/sl";
 import {BsSendFill} from "react-icons/bs";
 import Modal from "./Modal";
 import Transfer from "./Transfer";
-import {MdDelete} from "react-icons/md";
+import {MdDelete, MdHistory} from "react-icons/md";
+import {LuHistory} from "react-icons/lu";
 
 interface BankAccountProps {
     account:BankAccountT,
@@ -70,6 +71,21 @@ function BankAccount({account,currency}:BankAccountProps) {
         }
     };
 
+    const transactionHistory = async (number:string) => {
+        try {
+            const response = await axios.get(
+                `${link}/transaction/${number}`,{
+                    headers:{
+                        "Authorization" : token
+                    }
+                });
+            console.log(response.data)
+        } catch (err) {
+            console.error('Ошибка при получении списка треков:', err);
+            console.log(err)
+        }
+    };
+
 
 
     useEffect(()=>{
@@ -88,8 +104,8 @@ function BankAccount({account,currency}:BankAccountProps) {
             <div className="bank-account-actions">
                 <div className="card-action-button" onClick={()=>{setShowModal(true)}}><BsSendFill/></div>
                 <div className="card-action-button" onClick={()=>{closeAccount(account.number)}}><MdDelete/></div>
+                <div className="card-action-button" onClick={()=>{transactionHistory(account.number)}}><LuHistory /></div>
                 <div className="card-action-button"><SlOptions/></div>
-                {/*<div className="card-action-button">History</div>*/}
                 {/*<div className="card-deposit-button">+</div>*/}
                 {/*<div className="card-action-button">DEL</div>*/}
                 {/*<div className="card-action-button">INFO</div>*/}

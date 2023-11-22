@@ -28,25 +28,45 @@ const createNewAccount = async () => {
   }
 };
 
+    const fetchUser = async (UUID="0d49921b-7414-43ef-8215-930985397d75") => {
+        try {
+            setIsLoading(true)
+            const response = await axios.get(
+                `${link}/user/${UUID}`, {
+                    headers: {
+                        "Authorization": token
+                    }
+                });
+            setUser(response.data)
+            console.log(response.data)
+            setIsLoading(false)
+        } catch (err) {
+            setIsLoading(false)
+            console.error('Ошибка при получении списка треков:', err);
+            console.log(err)
+        }
+    };
+
+    const fetchKeycloakUser = async () => {
+        try {
+            setIsLoading(true)
+            const response = await axios.get(
+                `http://localhost:8080/realms/bank-app/protocol/openid-connect/userinfo`, {
+                    headers: {
+                        "Authorization": token
+                    }
+                });
+            fetchUser(response.data.sub)
+            setIsLoading(false)
+        } catch (err) {
+            setIsLoading(false)
+            console.error('Ошибка при получении списка треков:', err);
+            console.log(err)
+        }
+    };
+
  useEffect(()=>{
-     const fetchUser = async (UUID="0d49921b-7414-43ef-8215-930985397d75") => {
-         try {
-             setIsLoading(true)
-             const response = await axios.get(
-                 `${link}/user/${UUID}`, {
-                     headers: {
-                         "Authorization": token
-                     }
-                 });
-             setUser(response.data)
-             console.log(response.data)
-             setIsLoading(false)
-         } catch (err) {
-             setIsLoading(false)
-             console.error('Ошибка при получении списка треков:', err);
-             console.log(err)
-         }
-     };
+     // fetchKeycloakUser()
      fetchUser()
  },[])
     if (isLoading) return <div>Loading....</div>

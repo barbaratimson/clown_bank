@@ -29,7 +29,6 @@ function KeycloakAuth() {
 
     const getToken = async (code:any) => {
         try {
-            console.log(code)
             const response = await axios.post(
                 `http://localhost:8080/realms/bank-app/protocol/openid-connect/token`,{
                     client_id: KEYCLOAK_ID,
@@ -43,6 +42,7 @@ function KeycloakAuth() {
                     }});
             setAuthResponse(response.data)
             localStorage.setItem("token","Bearer " + response.data.access_token)
+            window.location.assign("/profile")
         } catch (err) {
             console.error('Ошибка при получении списка треков:', err);
             console.log(err)
