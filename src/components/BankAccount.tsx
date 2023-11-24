@@ -10,6 +10,7 @@ import Modal from "./Modal";
 import Transfer from "./Transfer";
 import {MdDelete, MdHistory} from "react-icons/md";
 import {LuHistory} from "react-icons/lu";
+import History from "./History";
 
 interface BankAccountProps {
     account:BankAccountT,
@@ -24,6 +25,7 @@ function BankAccount({account,currency}:BankAccountProps) {
     const dispatch = useAppDispatch();
     const [userCards,setUserCards] = useState<CardT[]>()
     const [showModal,setShowModal] = useState(false)
+    const [showModalHistory,setShowModalHistory] = useState(false)
     const createCard = async (id:string) => {
         try {
           const response = await axios.post(
@@ -71,20 +73,6 @@ function BankAccount({account,currency}:BankAccountProps) {
         }
     };
 
-    const transactionHistory = async (number:string) => {
-        try {
-            const response = await axios.get(
-                `${link}/transaction/${number}`,{
-                    headers:{
-                        "Authorization" : token
-                    }
-                });
-            console.log(response.data)
-        } catch (err) {
-            console.error('Ошибка при получении списка треков:', err);
-            console.log(err)
-        }
-    };
 
 
 
@@ -104,7 +92,7 @@ function BankAccount({account,currency}:BankAccountProps) {
             <div className="bank-account-actions">
                 <div className="card-action-button" onClick={()=>{setShowModal(true)}}><BsSendFill/></div>
                 <div className="card-action-button" onClick={()=>{closeAccount(account.number)}}><MdDelete/></div>
-                <div className="card-action-button" onClick={()=>{transactionHistory(account.number)}}><LuHistory /></div>
+                <div className="card-action-button" onClick={()=>{setShowModalHistory(true)}}><LuHistory /></div>
                 <div className="card-action-button"><SlOptions/></div>
                 {/*<div className="card-deposit-button">+</div>*/}
                 {/*<div className="card-action-button">DEL</div>*/}
@@ -114,7 +102,7 @@ function BankAccount({account,currency}:BankAccountProps) {
             </div>
             <div className="bank-account-info">
                 <div>Счет</div>
-                <div className="bank-account-number">{account.number}</div>
+                <div className="bank-account-number">{account.number.substring(account.number.length-4)}</div>
             </div>
             <div className={`cards-container  ${!account.active ? "inactive" : null}`}>
               {userCards ? userCards.map(card => !card.blocked ? (
@@ -133,6 +121,10 @@ function BankAccount({account,currency}:BankAccountProps) {
     {showModal ? (
         <Modal active={showModal} setActive={setShowModal} children={<Transfer target1={account}/>}></Modal>
     ):null}
+
+            {showModalHistory ? (
+                <Modal active={showModalHistory} setActive={setShowModalHistory} children={<History account={account}/>}></Modal>
+            ):null}
         </>
     );
   }

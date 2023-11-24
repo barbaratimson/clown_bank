@@ -32,9 +32,11 @@ export interface User {
 }
 
 export interface Notification {
+    id: bigint,
     message: string,
     timestamp: string
     userUniqueNumber: string,
-    type: string
+    type: string,
+    seen: boolean
 
 }

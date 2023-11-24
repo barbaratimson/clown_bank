@@ -28,7 +28,7 @@ const createNewAccount = async () => {
   }
 };
 
-    const fetchUser = async (UUID="0d49921b-7414-43ef-8215-930985397d75") => {
+    const fetchUser = async (UUID:string) => {
         try {
             setIsLoading(true)
             const response = await axios.get(
@@ -56,7 +56,7 @@ const createNewAccount = async () => {
                         "Authorization": token
                     }
                 });
-            fetchUser(response.data.sub)
+            await fetchUser(response.data.sub)
             setIsLoading(false)
         } catch (err) {
             setIsLoading(false)
@@ -66,8 +66,8 @@ const createNewAccount = async () => {
     };
 
  useEffect(()=>{
-     // fetchKeycloakUser()
-     fetchUser()
+     fetchKeycloakUser()
+         // fetchUser()
  },[])
     if (isLoading) return <div>Loading....</div>
     return (

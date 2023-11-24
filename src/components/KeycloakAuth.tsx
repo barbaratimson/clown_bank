@@ -48,9 +48,7 @@ function KeycloakAuth() {
             console.log(err)
         }
     };
-    // TODO: Redirect after suc login
     useEffect(() => {
-        console.log(CODE_VERIFIER.length)
         if(params.size === 0) {
             window.location.assign(keycloakAuth)
         } else {

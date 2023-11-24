@@ -11,7 +11,6 @@ const Notifications = () => {
     const [notifications,setNotifications] = useState(Array<Notification>)
     const fetchNotifications = async (id:string) => {
         try {
-            console.log(id)
             const response = await axios.get(
                 `${link}/notification/${id}`,{
                     headers:{
@@ -34,9 +33,9 @@ const Notifications = () => {
     }, [user]);
     return (
         <div className="notification-wrapper">
-            {notifications.map(notification => (
-                    <NotificationComponent message={notification.message} timestamp={notification.timestamp} type={notification.type} userUniqueNumber={notification.userUniqueNumber} />
-                )
+            {notifications.map(notification => !notification.seen ? (
+                    <NotificationComponent id={notification.id} seen={notification.seen} message={notification.message} timestamp={notification.timestamp} type={notification.type} userUniqueNumber={notification.userUniqueNumber} />
+                ):null
 
             )}
         </div>
@@ -48,7 +47,26 @@ export default Notifications
 const NotificationComponent = (notification:Notification) => {
     const [show,setShow] = useState(true)
 
+    const seenNotification = async (id:bigint) => {
+        try {
+            const response = await axios.post(
+                `${link}/notification/${id}`,null,{
+                    headers:{
+                        "Authorization" : token
+                    }
+                });
+            console.log(response.data)
+        } catch (err) {
+            console.error('Ошибка при получении списка треков:', err);
+            console.log(err)
+        }
+    };
+
+
     useEffect(() => {
+        if(!notification.seen) {
+            seenNotification(notification.id)
+        }
         let timeout = setTimeout(()=>{
                 setShow(false)
         },5000)

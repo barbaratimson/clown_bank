@@ -13,6 +13,7 @@ interface CardProps {
 function Card({card}:CardProps) {
     const [sliderValue,setSliderValue] = useState(0)
     const [showCredits,setShowCredits]= useState(false)
+    const cardNumber = card.number.toString()
     const checkSlider = ()=>{
         if (sliderValue <100) {
             setSliderValue(0)
@@ -27,7 +28,7 @@ function Card({card}:CardProps) {
     return (
       <div className="card">
             <div className="card-info">
-                <div className="card-number">{card.number}</div>
+                <div className="card-number">{cardNumber.substring(cardNumber.length-4)}</div>
                 {showCredits ? (
                     <div className="card-cridentials">
                         <div className="card-processor">{card.expiredDate}</div>
