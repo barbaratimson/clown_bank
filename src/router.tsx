@@ -9,7 +9,7 @@ const Router = () => {
     return <BrowserRouter>
         <Provider store={store}>
         <Routes>
-            <Route element={<Account/>} path = '/profile' />
+            <Route element={<Account/>} path = '/' />
             <Route element={<Authorization/>} path = '/auth/*' />
             <Route path = '*' element = {<div>Страница не найдена</div>} />
             <Route path = "/keycloak/*" element={<KeycloakAuth/>}></Route>
